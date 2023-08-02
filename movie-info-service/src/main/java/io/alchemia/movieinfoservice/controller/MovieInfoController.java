@@ -5,27 +5,28 @@ import io.alchemia.movieinfoservice.service.MovieService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
-public class MovieInfo {
+public class MovieInfoController {
 
     private final MovieService movieService;
 
-    public MovieInfo(final MovieService movieService) {
+    public MovieInfoController(final MovieService movieService) {
         this.movieService = movieService;
     }
 
-//    @RequestMapping("/{id}")
-//    public Movie getMovieInfo(@PathVariable("id") String id) {
-//        return movieService.getMovieInfo(id);
-//    }
+    @RequestMapping("/{id}")
+    public Mono<Movie> getMovieDetailedInfo(@PathVariable("id") String id) {
+        return movieService.getMovieDetailedInfo(id);
+    }
 
-    @RequestMapping("/{page}")
-    public List<Movie> getMovieInfoByName(@PathVariable("page") String page) {
-        return movieService.getMovieInfoByName(page);
+    @RequestMapping("/list")
+    public Mono<List<Movie>> getMovieInfoList() {
+        return movieService.getMovieInfoList();
     }
 
 }

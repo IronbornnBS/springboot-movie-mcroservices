@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MovieInfoServiceApplication {
 
 	@Bean
-	public WebClient.Builder getWebClientBuilder() {
+	public WebClient.Builder getWebClient() {
 		return WebClient.builder();
 	}
 

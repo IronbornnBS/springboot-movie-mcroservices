@@ -13,8 +13,8 @@ eureka:
     fetchRegistry: true
 
 movie_db:
-  api_key: ab6fdefc6079a2b57ff810e9bc9554ab
+  api_key: 7f46651666f1ca68e4cf0cb150551f07
   url:
     discover:
-      tv: https://api.themoviedb.org/3/discover/tv/page=%s/?api_key=%s
-      movies: https://api.themoviedb.org/3/discover/movie/page=%s/?api_key=%s
+      movie: https://api.themoviedb.org/3/movie/%s?api_key=${movie_db.api_key}
+      movies: https://api.themoviedb.org/3/discover/movie?api_key=${movie_db.api_key}
