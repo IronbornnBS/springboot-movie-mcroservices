@@ -1,7 +1,12 @@
+spring:
+  application:
+    name: movie-discovery-service
 server:
   port: 8761
-
+  servlet:
+    context-path: /service-discovery
 eureka:
   client:
     fetch-registry: false
     register-with-eureka: false
+

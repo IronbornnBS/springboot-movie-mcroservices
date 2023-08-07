@@ -2,6 +2,10 @@ server:
   port: 0
 
 spring:
+  cloud:
+    config:
+      discovery:
+        enabled: true
   application:
     name: movie-catalog-service
 
@@ -9,13 +13,16 @@ eureka:
   instance:
     preferIpAddress: false
   client:
-    registerWithEureka: true
-    fetchRegistry: true
+    service-url:
+      defaultZone: http://localhost:8761/service-discovery/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
 
 info-service:
-  name: movie-info-service
-  movie-info: "http://172.17.19.44:43153/movies/"
+  name: MOVIE-INFO-SERVICE
+  movie-info: http://${info-service.name}/movies/
 
 rating-service:
   name: movie-rating-service
-  user-rating: "http://172.17.19.44:42433/ratings/user/"
+  user-rating: http://${rating-service.name}/ratings/user/
