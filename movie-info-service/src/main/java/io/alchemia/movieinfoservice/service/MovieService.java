@@ -3,14 +3,13 @@ package io.alchemia.movieinfoservice.service;
 import io.alchemia.movieinfoservice.model.Movie;
 import io.alchemia.movieinfoservice.model.MovieDetailedSummary;
 import io.alchemia.movieinfoservice.model.MovieSummary;
+import io.alchemia.movieinfoservice.util.WebClientHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-
-import static io.alchemia.movieinfoservice.util.WebClientHelper.getWebClientBuilder;
 
 @Service
 public class MovieService {
@@ -21,11 +20,17 @@ public class MovieService {
     @Value("${movie_db.url.discover.movies}")
     private String moviesUrl;
 
+    private final WebClientHelper webClientHelper;
+
+    public MovieService(WebClientHelper webClientHelper) {
+        this.webClientHelper = webClientHelper;
+    }
+
     public Mono<Movie> getMovieDetailedInfo(String id) {
 
-        MovieDetailedSummary summary = getWebClientBuilder(HttpMethod.GET,
+        MovieDetailedSummary summary = webClientHelper.getWebClientBuilder(HttpMethod.GET,
                 String.format(movieUrl, id),
-                MovieDetailedSummary.class);
+                MovieDetailedSummary.class, true);
 
         Movie response = Movie.builder()
                 .id(summary.getId())
@@ -38,9 +43,9 @@ public class MovieService {
 
     public Mono<List<Movie>> getMovieInfoList() {
 
-        MovieSummary movieSummary =  getWebClientBuilder(HttpMethod.GET,
+        MovieSummary movieSummary =  webClientHelper.getWebClientBuilder(HttpMethod.GET,
                 moviesUrl,
-                MovieSummary.class);
+                MovieSummary.class, true);
 
         List<Movie> response = movieSummary.getResults()
                 .stream()

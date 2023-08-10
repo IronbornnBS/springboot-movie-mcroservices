@@ -1,6 +1,7 @@
 package io.alchemia.movieinfoservice.util;
 
 import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.util.retry.Retry;
 
@@ -9,13 +10,24 @@ import java.time.Duration;
 import static io.alchemia.movieinfoservice.util.Constants.MAX_ATTEMPTS;
 import static io.alchemia.movieinfoservice.util.Constants.TIMEOUT_SECONDS;
 
-public abstract class WebClientHelper {
+@Component
+public class WebClientHelper {
 
-    public static <T> T getWebClientBuilder(HttpMethod httpMethod,
+    private final WebClient.Builder loadBalancedBuilder;
+
+    public WebClientHelper(WebClient.Builder loadBalancedBuilder) {
+        this.loadBalancedBuilder = loadBalancedBuilder;
+    }
+
+    public <T> T getWebClientBuilder(HttpMethod httpMethod,
                                       String url,
-                                      Class<T> responseDtoClass) {
+                                      Class<T> responseDtoClass,
+                                     Boolean isExternal) {
 
-        return  WebClient.builder().build()
+        var builder = isExternal ? WebClient.builder() : loadBalancedBuilder;
+
+        return   builder
+                .build()
                 .method(httpMethod)
                 .uri(url)
                 .retrieve()
