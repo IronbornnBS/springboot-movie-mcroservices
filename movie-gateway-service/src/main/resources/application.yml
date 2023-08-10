@@ -1,0 +1,25 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: movie-gateway-service
+
+  cloud:
+    gateway:
+      routes:
+        - id: movie-catalog-service
+          uri: lb://MOVIE-CATALOG-SERVICE
+          predicates:
+            - Path=/catalog/**
+
+eureka:
+  instance:
+    preferIpAddress: false
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/service-discovery/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
+
