@@ -19,9 +19,9 @@ public class AuthenticationController {
         return authenticationService.createUser(userCredential);
     }
 
-    @GetMapping("/token")
-    public String createToken(UserCredentialEntity userCredential) {
-        return authenticationService.createToken(userCredential.getUsername());
+    @PostMapping("/token")
+    public String createToken(@RequestBody UserCredentialEntity userCredential) {
+        return authenticationService.createToken(userCredential);
     }
 
     @GetMapping("validate")
