@@ -12,6 +12,8 @@ spring:
           uri: lb://MOVIE-CATALOG-SERVICE
           predicates:
             - Path=/catalog/**
+          filters:
+            - AuthenticationFilter
 
         - id: movie-identity-service
           uri: lb://MOVIE-IDENTITY-SERVICE
@@ -28,3 +30,6 @@ eureka:
     register-with-eureka: true
     enabled: true
 
+identity-service:
+  name: movie-identity-service
+  validate-token: http://${identity-service.name}/authentication/validate?

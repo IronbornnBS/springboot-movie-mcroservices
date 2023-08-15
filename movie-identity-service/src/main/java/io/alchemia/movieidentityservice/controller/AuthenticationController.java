@@ -2,6 +2,7 @@ package io.alchemia.movieidentityservice.controller;
 
 import io.alchemia.movieidentityservice.entity.UserCredentialEntity;
 import io.alchemia.movieidentityservice.service.AuthenticationService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,7 +25,7 @@ public class AuthenticationController {
         return authenticationService.createToken(userCredential);
     }
 
-    @GetMapping("validate")
+    @GetMapping("/validate")
     public void validateToken(@RequestParam("token") String token) {
         authenticationService.validateToken(token);
     }
