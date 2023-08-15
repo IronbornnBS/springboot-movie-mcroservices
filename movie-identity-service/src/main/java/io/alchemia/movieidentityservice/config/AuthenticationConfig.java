@@ -36,9 +36,9 @@ public class AuthenticationConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http)  throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(antMatcher("/authentication/**")).permitAll();
-                });
-
+                    auth.requestMatchers(antMatcher("/authentication/**"),
+                            antMatcher("/console/**")).permitAll();
+                }).headers().frameOptions().disable();
         return http.build();
     }
 
