@@ -12,12 +12,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @SpringBootApplication
 public class MovieCatalogServiceApplication {
 
-	@Bean
-	@LoadBalanced
-	public WebClient.Builder getWebClientBuilder() {
-		return WebClient.builder();
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(MovieCatalogServiceApplication.class, args);
 	}
